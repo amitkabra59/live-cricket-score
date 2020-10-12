@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="up">
     <v-col
       v-for="(item, index) in matchInfo"
       cols="6"
@@ -99,4 +99,9 @@ export default {
 </script>
 
 <style>
-</style>script
+#up {
+  margin: 5rem auto;
+  /* padding: 0 5rem; */
+}
+</style>
+

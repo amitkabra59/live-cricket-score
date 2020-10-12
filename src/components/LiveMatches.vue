@@ -1,6 +1,5 @@
 <template>
-  <v-app>
-    <Menu></Menu>
+  <v-app id="live">
     <v-col
       v-for="(item, index) in matchInfo"
       cols="6"
@@ -11,7 +10,13 @@
         <v-card-title class="pa-0">
           <v-toolbar flat>
             <v-toolbar-title
-              >{{ item.home }} vs {{ item.away }}</v-toolbar-title
+              ><div
+                @click="
+                  this.window.location.href = 'http://localhost:8000/completed'
+                "
+              >
+                {{ item.home }} vs {{ item.away }}
+              </div></v-toolbar-title
             >
             <v-spacer></v-spacer>
           </v-toolbar>
@@ -30,13 +35,15 @@
 
 <script>
 const dotenv = require("dotenv");
-import Menu from "./Menu";
+// import Menu from "./Menu";
 dotenv.config();
 export default {
-  components: { Menu },
+  //   components: { Menu },
   data() {
     return {
       info: null,
+      matchId: String,
+      seriesId: String,
       responseAvailable: false,
       apiKey: process.env.API_KEY,
       ongoing: 0,
@@ -78,10 +85,11 @@ export default {
             this.ongoing = this.info.meta.inProgressMatchCount;
             console.log(this.ongoing);
             this.matches = this.info.matchList.matches.filter(
-              (mat) => mat.status === "LIVE" || "INPROGRESS"
+              (mat) => mat.status === "LIVE"
             );
 
             this.matches.map((data) => {
+              (this.matchId = data.id), (this.seriesId = data.series.id);
               if (data.homeTeam.isBatting) {
                 this.matchInfo.push({
                   home: data.homeTeam.name,
@@ -110,4 +118,8 @@ export default {
 </script>
 
 <style>
-</style>script
+#live {
+  margin: 5rem auto;
+  /* padding: 0 5rem; */
+}
+</style>
