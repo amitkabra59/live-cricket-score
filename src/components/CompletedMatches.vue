@@ -56,9 +56,6 @@ export default {
     this.loading = false;
   },
   methods: {
-    pushToScoreCard() {
-      this.$router.push("/scorecard", prop);
-    },
     fetchApiData() {
       fetch(
         "https://dev132-cricket-live-scores-v1.p.rapidapi.com/matches.php?completedlimit=15",
