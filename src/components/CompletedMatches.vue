@@ -1,25 +1,27 @@
 <template>
-  <v-app>
+  <v-app id="com">
     <Menu></Menu>
+    <div v-if="loading">
+      <h1>Loading ........................</h1>
+    </div>
+
     <v-col
+      v-else
       v-for="(item, index) in matchInfo"
       cols="6"
       :key="index"
       align-self="center"
     >
-      <v-card elevation="2">
+      <v-card elevation="2" color="#f0f2f5">
         <v-card-title class="pa-0">
           <v-toolbar flat>
-            <v-toolbar-title
-              >{{ item.home }} vs {{ item.away }}</v-toolbar-title
-            >
+            <v-toolbar-title>
+              {{ item.home }} vs {{ item.away }}
+            </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
         </v-card-title>
         <v-card-text>
-          <!-- <p class="display-1 text--primary">
-            {{ item.home }} vs {{ item.away }}
-          </p> -->
           <p>Venue: {{ item.venue }}</p>
           <p>
             Result: <b>{{ item.matchSummaryText }}</b>
@@ -41,6 +43,7 @@ export default {
   data() {
     return {
       info: null,
+      loading: true,
       responseAvailable: false,
       apiKey: process.env.API_KEY,
       completed: 0,
@@ -50,8 +53,12 @@ export default {
   },
   mounted() {
     this.fetchApiData();
+    this.loading = false;
   },
   methods: {
+    pushToScoreCard() {
+      this.$router.push("/scorecard", prop);
+    },
     fetchApiData() {
       fetch(
         "https://dev132-cricket-live-scores-v1.p.rapidapi.com/matches.php?completedlimit=15",
@@ -103,4 +110,9 @@ export default {
 </script>
 
 <style>
-</style>script
+#com {
+  margin: 5rem auto;
+  justify-content: center;
+  /* padding: 0 5rem; */
+}
+</style>

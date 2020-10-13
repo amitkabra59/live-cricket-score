@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import LiveMatches from './components/LiveMatches'
 import CompletedMatches from './components/CompletedMatches'
 import UpcomingMatches from './components/UpcomingMatches'
+import MatchInfo from './components/MatchInfo'
 
 
 
@@ -26,6 +27,9 @@ export const router = new VueRouter({
         },
         {
             path: '/upcoming', component: UpcomingMatches
+        },
+        {
+            path: '/scorecard', component: MatchInfo, props: true
         },
     ]
 })

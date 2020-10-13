@@ -25,6 +25,8 @@ export default {
     batName: { type: String },
     // bowName: { type: String },
     bow: { type: Array },
+    matchId: { type: String },
+    seriesId: { type: String },
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Menu></Menu>
-    <live-matches></live-matches>
+    <!-- <MatchInfo></MatchInfo> -->
     <v-content transition="slide-x-transition">
       <router-view></router-view>
     </v-content>
@@ -10,14 +10,16 @@
 
 <script>
 import Menu from "./components/Menu.vue";
-import LiveMatches from "./components/LiveMatches.vue";
+// import LiveMatches from "./components/LiveMatches.vue";
+// import MatchInfo from "./components/MatchInfo";
 
 export default {
   name: "App",
 
   components: {
     Menu,
-    LiveMatches,
+    // LiveMatches,
+    // MatchInfo,
   },
 
   data: () => ({
