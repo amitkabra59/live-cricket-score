@@ -32,7 +32,6 @@ export default {
   props: {
     bat: { type: Array },
     batName: { type: String },
-    // bowName: { type: String },
     bow: { type: Array },
     matchIds: { type: String },
     seriesIds: { type: String },
