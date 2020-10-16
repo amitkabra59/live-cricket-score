@@ -5,14 +5,20 @@
     </div>
     <div v-else>
       <score-card
+        :summary="summary"
         v-bind:bat="batting"
         v-bind:batName="teamName1"
         v-bind:bow="bowling"
+        :matchIds="matchId"
+        :seriesIds="seriesId"
       ></score-card>
+      <div class="box"></div>
       <score-card
         v-bind:bat="batting2"
         v-bind:batName="teamName2"
         v-bind:bow="bowling2"
+        :matchIds="matchId"
+        :seriesIds="seriesId"
       ></score-card>
     </div>
   </div>
@@ -23,7 +29,11 @@ const axios = require("axios").default;
 import ScoreCard from "./Scorecard";
 export default {
   // name: "Match Scorecard",
-  props: { matchId: { type: String }, seriesId: { type: String } },
+  props: {
+    matchId: { type: String },
+    seriesId: { type: String },
+    summary: String,
+  },
   data() {
     return {
       teamName1: "First Innings",
@@ -41,11 +51,18 @@ export default {
     };
   },
   async mounted() {
+    console.log("hi");
     await this.fetchScorecard();
     this.loading = false;
   },
   methods: {
     async fetchScorecard() {
+      console.log(
+        "https://dev132-cricket-live-scores-v1.p.rapidapi.com/scorecards.php?seriesid=" +
+          this.seriesId +
+          "&matchid=" +
+          this.matchId
+      );
       axios
         .get(
           "https://dev132-cricket-live-scores-v1.p.rapidapi.com/scorecards.php?seriesid=" +
@@ -94,5 +111,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.box {
+  padding: 1%;
+  margin: 10px 5px 10px 5px;
+}
 </style>

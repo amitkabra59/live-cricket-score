@@ -1,18 +1,18 @@
 <template>
   <v-app id="com">
     <Menu></Menu>
-    <div v-if="loading">
+    <div v-if="loading && !showSc">
       <h1>Loading ........................</h1>
     </div>
 
     <v-col
-      v-else
+      v-else-if="!showSc"
       v-for="(item, index) in matchInfo"
       cols="6"
       :key="index"
       align-self="center"
     >
-      <v-card elevation="2" color="#f0f2f5">
+      <v-card elevation="2" color="#f0f2f5" v-if="!showSc">
         <v-card-title class="pa-0">
           <v-toolbar flat>
             <v-toolbar-title>
@@ -27,28 +27,54 @@
             Result: <b>{{ item.matchSummaryText }}</b>
           </p>
         </v-card-text>
+        <v-card-actions>
+          <v-btn
+            @click.prevent="
+              showScorecard(
+                item.matchIds,
+                item.seriesIds,
+                item.matchSummaryText
+              )
+            "
+          >
+            Score
+          </v-btn>
+        </v-card-actions>
       </v-card>
 
       <v-divider :key="`divider-${index}`"></v-divider>
     </v-col>
+    <div v-else-if="showSc">
+      <v-btn @click.prevent="showScorecard(null, null)"> back </v-btn>
+      <match-infos
+        :matchId="mId"
+        :seriesId="sId"
+        :summary="matchSummary"
+      ></match-infos>
+    </div>
   </v-app>
 </template>
 
 <script>
 import Menu from "./Menu";
+import MatchInfo from "./MatchInfo";
 const dotenv = require("dotenv");
 dotenv.config();
 export default {
-  components: { Menu },
+  components: { Menu, matchInfos: MatchInfo },
   data() {
     return {
       info: null,
       loading: true,
       responseAvailable: false,
+      showSc: false,
       apiKey: process.env.API_KEY,
       completed: 0,
       matches: null,
       matchInfo: [],
+      mId: "",
+      sId: "",
+      matchSummary: "",
     };
   },
   mounted() {
@@ -56,6 +82,12 @@ export default {
     this.loading = false;
   },
   methods: {
+    showScorecard(matchIds, seriesIds, summary) {
+      this.mId = matchIds;
+      this.sId = seriesIds;
+      this.matchSummary = summary;
+      this.showSc = !this.showSc;
+    },
     fetchApiData() {
       fetch(
         "https://dev132-cricket-live-scores-v1.p.rapidapi.com/matches.php?completedlimit=15",
@@ -90,6 +122,8 @@ export default {
 
             this.matches.map((data) => {
               this.matchInfo.push({
+                matchIds: data.id,
+                seriesIds: data.series.id,
                 home: data.homeTeam.name,
                 away: data.awayTeam.name,
                 matchSummaryText: data.matchSummaryText,

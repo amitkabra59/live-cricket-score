@@ -1,21 +1,30 @@
 
 <template>
-  <div class="center">
-    <h2>{{ batName }}</h2>
-    <v-data-table
-      dense
-      :headers="batsmen"
-      :items="bat"
-      class="elevation-1"
-    ></v-data-table>
-    <div class="box"></div>
-    <v-data-table
-      dense
-      :headers="bowler"
-      :items="bow"
-      class="elevation-1"
-    ></v-data-table>
-  </div>
+  <v-col cols="6" align-self="center" class="center">
+    <div cols="6">
+      <p>{{ summary }}</p>
+      <h2>{{ batName }}</h2>
+      <v-data-table
+        dense
+        :headers="batsmen"
+        :items="bat"
+        class="elevation-1"
+        :items-per-page="30"
+        hide-default-footer
+      ></v-data-table>
+
+      <div class="box"></div>
+
+      <v-data-table
+        dense
+        :headers="bowler"
+        :items="bow"
+        class="elevation-1"
+        :items-per-page="30"
+        hide-default-footer
+      ></v-data-table>
+    </div>
+  </v-col>
 </template>
 
 <script>
@@ -25,8 +34,9 @@ export default {
     batName: { type: String },
     // bowName: { type: String },
     bow: { type: Array },
-    matchId: { type: String },
-    seriesId: { type: String },
+    matchIds: { type: String },
+    seriesIds: { type: String },
+    summary: String,
   },
   data() {
     return {
@@ -70,7 +80,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .center {
   margin: auto;
   /* width: 50%; */
@@ -78,6 +88,7 @@ export default {
   padding: 10px;
 }
 .box {
+  padding: 1%;
   margin: 10px 5px 10px 5px;
 }
 </style>
