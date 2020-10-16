@@ -8,7 +8,7 @@
         dense
         :headers="batsmen"
         :items="bat"
-        class="elevation-1"
+        class="elevation-1 light-blue"
         :items-per-page="30"
         hide-default-footer
       ></v-data-table>
