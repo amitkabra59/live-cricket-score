@@ -5,7 +5,7 @@
         <template v-for="(item, index) in items">
           <v-list-tile :key="index">
             <v-list-item-action>
-              <v-btn to="item.to">{{ item.title }}</v-btn>
+              <v-btn :to="item.to">{{ item.title }}</v-btn>
             </v-list-item-action>
           </v-list-tile>
           <v-divider :key="`divider-${index}`"></v-divider>
@@ -55,14 +55,16 @@ export default {
       appTitle: "Live Cricket Score",
       items: [
         {
-          icon: "mdi-calculator",
           title: "On-going Matches",
-          to: "/live",
+          to: "/",
         },
         {
-          icon: "mdi-view-dashboard",
           title: "Completed Matches",
           to: "/completed",
+        },
+        {
+          title: "Upcoming Matches",
+          to: "/upcoming",
         },
       ],
       miniVariant: false,
