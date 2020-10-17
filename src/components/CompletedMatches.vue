@@ -4,46 +4,49 @@
     <div v-if="loading && !showSc">
       <h1>Loading ........................</h1>
     </div>
+    <v-row v-else-if="!showSc">
+      <v-col
+        v-for="(item, index) in matchInfo"
+        cols="12"
+        sm="12"
+        lg="6"
+        xl="6"
+        :key="index"
+        align-self="center"
+      >
+        <v-card elevation="2" color="#f0f2f5" v-if="!showSc" xs12>
+          <v-card-title class="pa-0">
+            <v-toolbar flat>
+              <v-toolbar-title>
+                {{ item.home }} vs {{ item.away }}
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+          </v-card-title>
+          <v-card-text>
+            <p>Venue: {{ item.venue }}</p>
+            <p>
+              Result: <b>{{ item.matchSummaryText }}</b>
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              @click.prevent="
+                showScorecard(
+                  item.matchIds,
+                  item.seriesIds,
+                  item.matchSummaryText
+                )
+              "
+            >
+              Score
+            </v-btn>
+          </v-card-actions>
+        </v-card>
 
-    <v-col
-      v-else-if="!showSc"
-      v-for="(item, index) in matchInfo"
-      cols="6"
-      :key="index"
-      align-self="center"
-    >
-      <v-card elevation="2" color="#f0f2f5" v-if="!showSc">
-        <v-card-title class="pa-0">
-          <v-toolbar flat>
-            <v-toolbar-title>
-              {{ item.home }} vs {{ item.away }}
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-        </v-card-title>
-        <v-card-text>
-          <p>Venue: {{ item.venue }}</p>
-          <p>
-            Result: <b>{{ item.matchSummaryText }}</b>
-          </p>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            @click.prevent="
-              showScorecard(
-                item.matchIds,
-                item.seriesIds,
-                item.matchSummaryText
-              )
-            "
-          >
-            Score
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-
-      <v-divider :key="`divider-${index}`"></v-divider>
-    </v-col>
+        <v-divider :key="`divider-${index}`"></v-divider>
+      </v-col>
+    </v-row>
     <div v-else-if="showSc">
       <v-btn @click.prevent="showScorecard(null, null)"> back </v-btn>
       <match-infos
@@ -121,14 +124,16 @@ export default {
             );
 
             this.matches.map((data) => {
-              this.matchInfo.push({
-                matchIds: data.id,
-                seriesIds: data.series.id,
-                home: data.homeTeam.name,
-                away: data.awayTeam.name,
-                matchSummaryText: data.matchSummaryText,
-                venue: data.venue.name,
-              });
+              if (data.homeTeam.name != "Unknown") {
+                this.matchInfo.push({
+                  matchIds: data.id,
+                  seriesIds: data.series.id,
+                  home: data.homeTeam.name,
+                  away: data.awayTeam.name,
+                  matchSummaryText: data.matchSummaryText,
+                  venue: data.venue.name,
+                });
+              }
             });
           }
         })
@@ -142,7 +147,6 @@ export default {
 
 <style>
 #com {
-  margin: 5rem auto;
   justify-content: center;
   /* padding: 0 5rem; */
 }

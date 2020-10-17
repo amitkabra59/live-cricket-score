@@ -1,35 +1,34 @@
 <template>
   <v-app id="live">
-    <v-col
-      v-for="(item, index) in matchInfo"
-      cols="6"
-      :key="index"
-      align-self="center"
-    >
-      <v-card elevation="2">
-        <v-card-title class="pa-0">
-          <v-toolbar flat>
-            <v-toolbar-title
-              ><div
-                @click="
-                  this.window.location.href = 'http://localhost:8000/completed'
-                "
+    <v-row>
+      <v-col
+        v-for="(item, index) in matchInfo"
+        cols="12"
+        :key="index"
+        align-self="center"
+        sm="12"
+        lg="6"
+        xl="6"
+      >
+        <v-card elevation="2">
+          <v-card-title class="pa-0">
+            <v-toolbar flat>
+              <v-toolbar-title
+                ><div>{{ item.home }} vs {{ item.away }}</div></v-toolbar-title
               >
-                {{ item.home }} vs {{ item.away }}
-              </div></v-toolbar-title
-            >
-            <v-spacer></v-spacer>
-          </v-toolbar>
-        </v-card-title>
-        <v-card-text>
-          <!-- <p class="display-1 text--primary">
+              <v-spacer></v-spacer>
+            </v-toolbar>
+          </v-card-title>
+          <v-card-text>
+            <!-- <p class="display-1 text--primary">
             {{ item.home }} vs {{ item.away }}
           </p> -->
-        </v-card-text>
-      </v-card>
+          </v-card-text>
+        </v-card>
 
-      <v-divider :key="`divider-${index}`"></v-divider>
-    </v-col>
+        <v-divider :key="`divider-${index}`"></v-divider>
+      </v-col>
+    </v-row>
   </v-app>
 </template>
 

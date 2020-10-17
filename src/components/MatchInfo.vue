@@ -8,6 +8,7 @@
         :summary="summary"
         v-bind:bat="batting"
         v-bind:batName="teamName1"
+        :bowName="teamName2"
         v-bind:bow="bowling"
         :matchIds="matchId"
         :seriesIds="seriesId"
@@ -84,13 +85,14 @@ export default {
             this.fullSc1.push(response.data.fullScorecard.innings[0]);
             this.fullSc1.map((data) => {
               console.log(data);
-              this.teamName1 = data.name || "";
+              this.teamName1 = data.name.replace("1st Inn", "") || "";
               this.batting = data.batsmen;
               this.bowling = data.bowlers;
             });
             console.log(this.innings1);
             this.fullSc2.push(response.data.fullScorecard.innings[1]);
             this.fullSc2.map((data) => {
+              this.teamName2 = data.name.replace("1st Inn", "") || "";
               this.batting2 = data.batsmen;
               this.bowling2 = data.bowlers;
             });

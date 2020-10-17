@@ -1,31 +1,36 @@
 <template>
   <v-app id="up">
-    <v-col
-      v-for="(item, index) in matchInfo"
-      cols="6"
-      :key="index"
-      align-self="center"
-    >
-      <v-card elevation="2">
-        <v-card-title class="pa-0">
-          <v-toolbar flat>
-            <v-toolbar-title
-              >{{ item.home }} vs {{ item.away }}</v-toolbar-title
-            >
-            <v-spacer></v-spacer>
-          </v-toolbar>
-        </v-card-title>
-        <v-card-text>
-          <p>Start date: {{ item.startDateTime }}</p>
-          <p>Venue: {{ item.venue }}</p>
-          <p>
-            <b>{{ item.matchSummaryText }}</b>
-          </p>
-        </v-card-text>
-      </v-card>
+    <v-row>
+      <v-col
+        v-for="(item, index) in matchInfo"
+        cols="12"
+        sm="10"
+        lg="6"
+        xl="6"
+        :key="index"
+        align-self="center"
+      >
+        <v-card elevation="2">
+          <v-card-title class="pa-0">
+            <v-toolbar flat>
+              <v-toolbar-title
+                >{{ item.home }} vs {{ item.away }}</v-toolbar-title
+              >
+              <v-spacer></v-spacer>
+            </v-toolbar>
+          </v-card-title>
+          <v-card-text>
+            <p>Start date: {{ item.startDateTime }}</p>
+            <p>Venue: {{ item.venue }}</p>
+            <p>
+              <b>{{ item.matchSummaryText }}</b>
+            </p>
+          </v-card-text>
+        </v-card>
 
-      <v-divider :key="`divider-${index}`"></v-divider>
-    </v-col>
+        <v-divider :key="`divider-${index}`"></v-divider>
+      </v-col>
+    </v-row>
   </v-app>
 </template>
 
@@ -80,13 +85,15 @@ export default {
             );
 
             this.matches.map((data) => {
-              this.matchInfo.push({
-                home: data.homeTeam.name,
-                away: data.awayTeam.name,
-                matchSummaryText: data.matchSummaryText,
-                venue: data.venue.name,
-                startDateTime: data.startDateTime,
-              });
+              if (data.homeTeam.name != "Unknown") {
+                this.matchInfo.push({
+                  home: data.homeTeam.name,
+                  away: data.awayTeam.name,
+                  matchSummaryText: data.matchSummaryText,
+                  venue: data.venue.name,
+                  startDateTime: new Date(data.startDateTime),
+                });
+              }
             });
           }
         })
