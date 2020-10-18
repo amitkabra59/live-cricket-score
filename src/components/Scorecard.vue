@@ -1,6 +1,7 @@
 
 <template>
   <v-container>
+    <h1 id="result">{{ summary ? summary.replace("win", "won") : "" }}</h1>
     <v-row>
       <v-col
         cols="12"
@@ -12,7 +13,6 @@
         sm="12"
       >
         <div>
-          <p>{{ summary }}</p>
           <h2>{{ batName }}</h2>
           <v-flex md12 xs12 style="overflow: auto">
             <v-data-table
@@ -116,8 +116,8 @@ export default {
     batName: { type: String },
     bowName: { type: String },
     bow: { type: Array },
-    matchIds: { type: String },
-    seriesIds: { type: String },
+    matchIds: { type: Number },
+    seriesIds: { type: Number },
     summary: String,
   },
   data() {
@@ -175,7 +175,7 @@ export default {
 .center {
   margin: auto;
   /* width: 50%; */
-  border: 3px solid green;
+  border: 3px solid rgb(242, 248, 242);
   padding: 10px;
 }
 .box {
@@ -183,9 +183,13 @@ export default {
   margin: 10px 5px 10px 5px;
 }
 tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(14, 52, 221, 0.05);
 }
 tbody tr:hover {
   color: blue;
+}
+#result {
+  justify-content: center;
+  text-align: center;
 }
 </style>
