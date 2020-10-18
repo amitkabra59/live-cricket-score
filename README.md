@@ -1,4 +1,5 @@
 # live-cricket-score
+Live URL: https://cricket-score-live.herokuapp.com/
 
 ## Project setup
 ```
